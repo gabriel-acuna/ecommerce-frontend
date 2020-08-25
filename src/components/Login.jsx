@@ -1,15 +1,15 @@
-import React from 'react';
-import { useState } from 'react';
-
+import React,{ useState, useContext } from 'react';
+import { AuthContext } from '../App';
+import {login} from '../services/auth.service';
 
 export default (props) => {
+    const context = useContext(AuthContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     let sendCredentials = (event) => {
         event.preventDefault();
-        if (email !== null || password !== null) {
-            console.log(email, password);
-        }
+        login(context, {username:email, password})
+        
     }
     return (
         <div className="container mt-5">

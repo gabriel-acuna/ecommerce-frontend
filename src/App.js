@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Layaout from './commponents/Layaout';
+import Layaout from './components/Layaout';
 
 export const AuthContext = React.createContext();
 function App() {

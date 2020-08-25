@@ -1,8 +1,8 @@
 import React from 'react';
-import  Home  from './commponents/Home';
-import  Login from './commponents/Login';
-import AdminHome from './commponents/admin/index';
-import ProviderHome from './commponents/provider/index';
+import  Home  from './components/Home';
+import  Login from './components/Login';
+import AdminHome from './components/admin/index';
+import ProviderHome from './components/provider/index';
 
 
 export const routes =  [
