@@ -18,7 +18,7 @@ export default (props) => {
                         <Route component={r.component} exact path={r.path} key={i}/>
                     ))}
                     <Route  exact path="/sing-up-provider"  component={() => <SignUp isProvider={true} />}/>
-                    <Route  exact path="/sing-up"  component={() => <SignUp />}/>
+                    <Route  exact path="/sing-up"  component={() => <SignUp  isProvider={false}/>}/>
                 </main>
             </Fragment >
         </BrowserRouter>

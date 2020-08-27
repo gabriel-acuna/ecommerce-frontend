@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Options from '../shared/Options';
 import { FcMultipleSmartphones, FcCollaboration } from 'react-icons/fc';
 import OptionCard from '../shared/OptionCard';
-import { getUserAuth } from '../../services/auth.service';
+import { getUserAuth, isProvider } from '../../services/auth.service';
 import { useHistory, useLocation } from "react-router-dom";
 
 const options = [
@@ -38,10 +38,12 @@ export default (props) => {
 
     useEffect(() => {
         let authData = getUserAuth();
-        if (Object.keys(authData).length === 0) {
+        if ((Object.keys(authData).length === 0)  || isProvider()===false){
             history.push("/");
         }
     }, [history, location.pathname]);
+
+    console.log(isProvider());
     return (
         <div className="container">
             <Options>

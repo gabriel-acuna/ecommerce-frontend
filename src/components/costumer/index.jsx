@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'; 
-import {getUserAuth} from '../../services/auth.service';
+import {getUserAuth, isCostumer} from '../../services/auth.service';
 import { useHistory, useLocation } from "react-router-dom";
 
 
@@ -9,14 +9,14 @@ export default (props) => {
   
     useEffect(() => {
         let authData = getUserAuth();
-        if (Object.keys(authData).length === 0 ) {
+        if ((Object.keys(authData).length === 0 ) || isCostumer()===false) {
             history.push("/");
         } 
     },[history, location.pathname]);
     
     let auth = getUserAuth();
     
-   
+console.log( isCostumer());
     return (
         <div className="container">
 

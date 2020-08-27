@@ -52,7 +52,7 @@ export default (props) => {
                                 <input type="password" className="input is-primary" required onChange={(event) => setPassword(event.target.value)} />
                             </div>
                             <div className="control mt-2">
-                                <button className="button is-primary is-pulled-right">Registrar</button>
+                                <button className="button is-primary is-pulled-right">Iniciar sesión</button>
 
                                 {hasError && <Alert type={'is-danger'} content={"Usuario/Email o Contraseña inconrecta"}>
                                     <button className="delete" onClick={event => setHasError(false)}></button></Alert>}

@@ -12,12 +12,12 @@ export async function login(credentials) {
             }
         });
         let resp = await response.json();
-        if(resp.accessToken){
+        if (resp.accessToken) {
             localStorage.setItem("auth", JSON.stringify(resp));
         }
-       
+
         return resp;
-        
+
     } catch (error) {
         console.log(error);
         throw new Error(error);
@@ -55,12 +55,31 @@ export function authHeader() {
     }
 }
 
-export function getUserAuth(){
-    if(localStorage.getItem('auth')){
+export function getUserAuth() {
+    if (localStorage.getItem('auth')) {
         return JSON.parse(localStorage.getItem('auth'));
-    }else{
+    } else {
         return {}
     }
 }
 
+export function isCostumer() {
 
+    let auth = getUserAuth();
+
+    if (auth.roles) {
+        let resp = auth.roles.find(r => r === 'ROLE_USER');
+        return resp !== undefined
+    }
+}
+
+export function isProvider() {
+
+    let auth = getUserAuth();
+
+    if (auth.roles) {
+        let resp = auth.roles.find(r => r === 'ROLE_PROVIDER');
+        return resp !== undefined
+    }
+
+}

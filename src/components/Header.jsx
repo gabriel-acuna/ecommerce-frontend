@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getUserAuth, logout } from '../services/auth.service';
+import { getUserAuth, logout, isCostumer } from '../services/auth.service';
 import { useHistory, useLocation } from "react-router-dom";
 import { useEffect } from 'react';
-import { FaAngleDown, FaUserCog, FaPowerOff, FaSignOutAlt } from 'react-icons/fa';
+import { FaAngleDown, FaUserCog,  FaSignOutAlt, FaShoppingBag } from 'react-icons/fa';
 export default (props) => {
 
     const history = useHistory();
@@ -38,9 +38,30 @@ export default (props) => {
         <section className="hero has-background-dark">
             <div className="hero-body">
                 <div className="container">
-                    <Link to="/"><h1 className="title has-text-light">
-                        Site
+                    {
+                        Object.keys(getUserAuth()).length === 0 &&
+                        < Link to="/"><h1 className="title has-text-light">
+                            Site
                         </h1></Link>
+                    }
+                     {
+                        Object.keys(getUserAuth()).length > 0 && getUserAuth().roles[0] === 'ROLE_USER' &&
+                        < Link to="/costumer"><h1 className="title has-text-light">
+                            Site
+                        </h1></Link>
+                    }
+                     {
+                        Object.keys(getUserAuth()).length > 0 && getUserAuth().roles[0] === 'ROLE_PROVIDER' &&
+                        < Link to="/provider"><h1 className="title has-text-light">
+                            Site
+                        </h1></Link>
+                    }
+                    {
+                        Object.keys(getUserAuth()).length > 0 && getUserAuth().roles[0] === 'ROLE_ADMIN' &&
+                        < Link to="/admin"><h1 className="title has-text-light">
+                            Site
+                        </h1></Link>
+                    }
                     {
                         Object.keys(getUserAuth()).length === 0
                         && <Link to="sing-up-provider" className="is-pulled-left button is-small is-primary is-outlined mr-4"> ¿Quieres vender?</Link>
@@ -76,6 +97,17 @@ export default (props) => {
 
 
                                     </a>
+                                    {
+                                        isCostumer() && 
+                                        <Link className="dropdown-item" to="/costumer">
+                                        <span> Comprar</span>
+                                        <span className="icon is-small is-pulled-right">
+                                            <FaShoppingBag />
+                                        </span>
+
+
+                                    </Link>
+                                    }
                                     <a className="dropdown-item" onClick={event => singOut(event)}>
                                         <span>Cerrar sesión</span>
                                         <span className="icon is-small is-pulled-right">
@@ -99,7 +131,7 @@ export default (props) => {
 
             </div>
 
-        </section>
+        </section >
 
 
     )
