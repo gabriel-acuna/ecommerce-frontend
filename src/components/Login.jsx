@@ -1,15 +1,40 @@
-import React,{ useState, useContext } from 'react';
-import { AuthContext } from '../App';
-import {login} from '../services/auth.service';
-
+import React, { useState } from 'react';
+import { login } from '../services/auth.service';
+import { useHistory } from "react-router-dom";
+import  Alert  from './Alert';
 export default (props) => {
-    const context = useContext(AuthContext);
+    const history = useHistory();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [hasError, setHasError] = useState(false);
+    let checkPermission = (auth) => {
+        switch (auth[0]) {
+            case 'ROLE_USER':
+                history.push('/costumer');
+                break;
+            case 'ROLE_PROVIDER':
+                history.push('/provider');
+                break;
+            default:
+                history.push('/admin');
+                break;
+        }
+    }
+
     let sendCredentials = (event) => {
         event.preventDefault();
-        login(context, {username:email, password})
-        
+        login({ username: email, password }).then(resp => {
+            if ((Object.keys(resp).length > 0 && resp.accessToken)) {
+                checkPermission(resp.roles);
+            } else {
+                setHasError(true);
+            }
+        });
+
+
+
+
     }
     return (
         <div className="container mt-5">
@@ -18,7 +43,7 @@ export default (props) => {
 
                     <div className="field mx-2 mt-3">
                         <form onSubmit={(event) => sendCredentials(event)}>
-                            <label htmlFor="#email" className="label">Email</label>
+                            <label htmlFor="#email" className="label">Usuario o Email</label>
                             <div className="control">
                                 <input type="email" id="email" className="input is-primary" required onChange={(event) => setEmail(event.target.value)} />
                             </div>
@@ -28,6 +53,9 @@ export default (props) => {
                             </div>
                             <div className="control mt-2">
                                 <button className="button is-primary is-pulled-right">Registrar</button>
+
+                                {hasError && <Alert type={'is-danger'} content={"Usuario/Email o Contraseña inconrecta"}>
+                                    <button className="delete" onClick={event => setHasError(false)}></button></Alert>}
                             </div>
 
                         </form>

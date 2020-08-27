@@ -2,7 +2,7 @@ import { signinEndPoint, registerEndPoint } from './config/endpoints';
 
 
 
-export async function login( context,credentials ) {
+export async function login(credentials) {
     try {
         let response = await fetch(signinEndPoint, {
             method: 'POST',
@@ -11,42 +11,56 @@ export async function login( context,credentials ) {
                 'Content-Type': 'application/json'
             }
         });
-        let resp = await response.json;
-        context.setAuth(resp);
+        let resp = await response.json();
+        if(resp.accessToken){
+            localStorage.setItem("auth", JSON.stringify(resp));
+        }
+       
+        return resp;
+        
     } catch (error) {
+        console.log(error);
         throw new Error(error);
     }
 
 }
-export async function register( context,userData ) {
+export async function register(userData) {
     try {
         let response = await fetch(registerEndPoint, {
             method: 'POST',
             body: JSON.stringify(userData),
             headers: {
                 'Content-Type': 'application/json'
+
             }
         });
-        return await response.json;
+        let resp = await response.json();
+        return resp;
     } catch (error) {
         throw new Error(error);
     }
 
 }
 
-export function logout(context){
-    context.setAuth({});
+export function logout() {
+    localStorage.removeItem("auth");
 }
 
-export function authHeader(context) {
-    
-  
-    if (context.getAuth() && context.getAuth().token) {
-      // for Node.js Express back-end
-      return { Authorization: `Bearer ${context.getAuth().token}`  };
+export function authHeader() {
+    const auth = JSON.parse(localStorage.getItem('auth'));
+    if (auth && auth.token) {
+        return { Authorization: `Bearer ${auth.token}` };
     } else {
-      return {};
+        return {};
     }
-  }
+}
+
+export function getUserAuth(){
+    if(localStorage.getItem('auth')){
+        return JSON.parse(localStorage.getItem('auth'));
+    }else{
+        return {}
+    }
+}
 
 

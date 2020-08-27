@@ -17,7 +17,6 @@ const options = [
     }
 ];
 
-console.log(options);
 export default (props) => {
 
     return (

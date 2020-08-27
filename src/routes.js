@@ -3,6 +3,8 @@ import  Home  from './components/Home';
 import  Login from './components/Login';
 import AdminHome from './components/admin/index';
 import ProviderHome from './components/provider/index';
+import CostumerHome from './components/costumer/index';
+
 
 
 export const routes =  [
@@ -21,5 +23,9 @@ export const routes =  [
     {
       path:"/provider",
       component: ProviderHome
+    },
+    {
+      path:"/costumer",
+      component: CostumerHome
     }
   ];

@@ -1,9 +1,11 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from '../App';
-import {register} from '../services/auth.service';
+import React, { useState } from 'react';
+//import {getUserAuth} from '../services/auth.service';
+import { register } from '../services/auth.service';
+import Alert from './Alert';
 export default ({ isProvider = false }) => {
-    const context = useContext(AuthContext);
     
+    const [response, setResponse] = useState({ message: { type: '', message: '' } });
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [password1, setPassword1] = useState('');
@@ -11,15 +13,18 @@ export default ({ isProvider = false }) => {
     const [lastName, setLastName] = useState('');
     const [documentType, setDocumentType] = useState('');
     const [document, setDocument] = useState('');
+    const [showUsernameNotification, setShowUsernameNotification] = useState(false);
     const [showPaswordNotification, setShowPaswordNotification] = useState(false);
     const [showPasword1Notification, setShowPasword1Notification] = useState(false);
     const [showPasword1Notification1, setShowPasword1Notification1] = useState(false);
 
 
-    function sendUserData (event) {
+    async function sendUserData(event) {
         event.preventDefault();
-        if(validatePasword){
-           register( context,{
+        let res;
+        if (validatePasword() && validateUsername()) {
+            res = await register({
+                username,
                 email,
                 password,
                 firstName,
@@ -28,31 +33,55 @@ export default ({ isProvider = false }) => {
                 document,
                 isProvider
 
-            })
+            });
+            setResponse(res)
+            if(res.message.type==='success'){
+                setDocument('');
+                setDocumentType('');
+                setFirstName('');
+                setLastName('');
+                setEmail('');
+                setPassword('');
+                setPassword1('');
+                setUsername('');
+                
+            }
+          
         }
 
-        
-        
+
+
     }
 
-    function validatePasword(){
+    function validateUsername() {
+        let regex = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{6,50}$/;
+        let isVail = regex.test(username);
+        if (isVail) {
+            return true;
+        } else {
+            setShowUsernameNotification(true);
+            return false
+        }
+    }
+
+    function validatePasword() {
         let isValid = false;
-        let passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/;
-        if(password.match(passw)){
-            isValid=true;
-        } 
-        else setShowPaswordNotification(true); isValid=false;
-        if(password1.match(passw)){
-            isValid=true;
-        } 
-        else setShowPasword1Notification(true); isValid=false;
-        if(password === password1 ){
-            isValid=true ;
-        }setShowPasword1Notification1(true); isValid=false;
+        let passw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,16}$/;
+        if (passw.test(password)) {
+            isValid = true;
+        }
+        else { setShowPaswordNotification(true); isValid = false; }
+        if (passw.test(password1)) {
+            isValid = true;
+        }
+        else { setShowPasword1Notification(true); isValid = false; }
+        if (password === password1) {
+            isValid = true;
+        } else { setShowPasword1Notification1(true); isValid = false; }
         return isValid;
     }
-   
-    
+
+
     return (
         <div className="container mt-5">
             <div className="columns is-centered">
@@ -60,6 +89,15 @@ export default ({ isProvider = false }) => {
 
                     <div className="field mx-2 mt-3">
                         <form onSubmit={(event) => sendUserData(event)}>
+                            <div className="control">
+                                <label htmlFor="#username" className="label">Usuario</label>
+                                <input type="username" id="username" className="input is-primary" required onChange={(event) => setUsername(event.target.value)} />
+                                {
+                                    showUsernameNotification && <Alert>
+                                        <button className="delete" onClick={event => setShowUsernameNotification(false)}></button>
+                                    </Alert>
+                                }
+                            </div>
 
                             <div className="control">
                                 <label htmlFor="#email" className="label">Email</label>
@@ -70,25 +108,31 @@ export default ({ isProvider = false }) => {
                             <label htmlFor="#password" className="label">Contraseña</label>
                             <div className="control">
                                 <input type="password" className="input is-primary" required onChange={(event) => setPassword(event.target.value)} />
-                               { showPaswordNotification && <div class="notification is-danger mt-3">
-                                    <button class="delete"></button>
-                                    La contraseña debe tener de <strong> 6 a 20 caracteres</strong> que contengan al menos un dígito numérico, una letra mayúscula y una minúscula
-
-                                </div>}
+                                {showPaswordNotification && <Alert
+                                    type={"is-danger"}
+                                    content={"La contraseña debe tener de 6 a 20 caracteres que contengan al menos un dígito numérico, una letra mayúscula y una minúscula"}
+                                >
+                                    <button className="delete" onClick={event => setShowPaswordNotification(false)}></button>
+                                </Alert>
+                                }
                             </div>
                             <label htmlFor="#password" className="label">Repetir Contraseña</label>
                             <div className="control">
                                 <input type="password" id="password" className="input is-primary" required onChange={(event) => setPassword1(event.target.value)} />
-                                {showPasword1Notification && <div class="notification is-danger mt-3">
-                                    <button class="delete"></button>
-                                    Las contraseñas no coinciden
+                                {showPasword1Notification1 && <Alert type="is-danger"
 
-                                </div>}
-                                { showPasword1Notification1 && <div class="notification is-danger mt-3">
-                                    <button class="delete"></button>
-                                    La contraseña debe tener de <strong> 6 a 20 caracteres</strong> que contengan al menos un dígito numérico, una letra mayúscula y una minúscula
-
-                                </div>}
+                                    content={"Las contraseñas no coinciden"}
+                                >
+                                    <button class="delete" onClick={event => setShowPasword1Notification1(false)}></button>
+                                </Alert>
+                                }
+                                {showPasword1Notification && <Alert
+                                    type={"is-danger"}
+                                    content={"La contraseña debe tener de 6 a 20 caracteres que contengan al menos un dígito numérico, una letra mayúscula y una minúscula"}
+                                >
+                                    <button className="delete" onClick={event => setShowPasword1Notification(false)}></button>
+                                </Alert>
+                                }
                             </div>
                             <label htmlFor="#first-name" className="label">Nombre</label>
                             <div className="control">
@@ -113,6 +157,11 @@ export default ({ isProvider = false }) => {
                             </div>
                             <div className="control mt-2">
                                 <button className="button is-primary is-pulled-right">Registrar</button>
+
+                                {response && response.message.type === 'warning' && <Alert type={'is-warning'} content={response.message.content}>
+                                    <button className="delete" onClick={event => setResponse({ message: { type: '', message: '' } })} ></button> </Alert>}
+                                {response && response.message.type === 'success' && <Alert type={'is-success'} content={response.message.content}>
+                                    <button className="delete" onClick={event => setResponse({ message: { type: '', message: '' } })}></button></Alert>}
                             </div>
 
                         </form>

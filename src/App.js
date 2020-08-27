@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Layaout from './components/Layaout';
 
 export const AuthContext = React.createContext();
 function App() {
-  const [auth, setAuth] = useState({});
-  if (!auth) {
-
-  }
+  
   return (
     <div className="App">
       
-      
-      <AuthContext.Provider value={{auth, setAuth}}>
       <Layaout/>
   
-      </AuthContext.Provider>
     </div>
   );
 }

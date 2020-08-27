@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Options from '../shared/Options';
 import { FcMultipleSmartphones, FcCollaboration } from 'react-icons/fc';
 import OptionCard from '../shared/OptionCard';
+import { getUserAuth } from '../../services/auth.service';
+import { useHistory, useLocation } from "react-router-dom";
 
 const options = [
     {
@@ -30,9 +32,16 @@ const options = [
 
 ];
 
-console.log(options);
 export default (props) => {
+    const history = useHistory();
+    let location = useLocation();
 
+    useEffect(() => {
+        let authData = getUserAuth();
+        if (Object.keys(authData).length === 0) {
+            history.push("/");
+        }
+    }, [history, location.pathname]);
     return (
         <div className="container">
             <Options>
