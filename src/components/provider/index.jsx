@@ -43,7 +43,7 @@ export default (props) => {
         }
     }, [history, location.pathname]);
 
-    console.log(isProvider());
+   
     return (
         <div className="container">
             <Options>

@@ -1,12 +1,19 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Header from './Header';
 import {BrowserRouter, Route} from 'react-router-dom';
 import SignUp from './SignUp';
 import { routes } from '../routes';
+import { isTokenValid, logout } from '../services/auth.service';
 
 
 export default (props) => {
-
+    useEffect(() => {
+        
+        if (!isTokenValid()) {
+            logout();
+        } 
+    },[]);
+    console.log(isTokenValid());
     return (
         <BrowserRouter>
             <Fragment>

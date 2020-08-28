@@ -1,5 +1,5 @@
 import { signinEndPoint, registerEndPoint } from './config/endpoints';
-
+import decode from 'jwt-decode';
 
 
 export async function login(credentials) {
@@ -48,10 +48,10 @@ export function logout() {
 
 export function authHeader() {
     const auth = JSON.parse(localStorage.getItem('auth'));
-    if (auth && auth.token) {
-        return { Authorization: `Bearer ${auth.token}` };
+    if (auth && auth.accessToken) {
+        return `Bearer ${auth.accessToken}` ;
     } else {
-        return {};
+        return '';
     }
 }
 
@@ -82,4 +82,14 @@ export function isProvider() {
         return resp !== undefined
     }
 
+}
+
+export function isTokenValid(){
+    let isValid = false;
+    let auth = getUserAuth();
+    if (auth.accessToken) {
+        let  decodedToken = decode(auth.accessToken);
+        isValid = decodedToken.exp < Date.now() /1000;
+    } 
+  return isValid;
 }

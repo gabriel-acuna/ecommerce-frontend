@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Options from '../shared/Options';
 import { FcMultipleSmartphones, FcCollaboration } from 'react-icons/fc';
 import OptionCard from '../shared/OptionCard';
+import {getUserAuth} from '../../services/auth.service';
+import { listarMarcas } from '../../services/marcas.service';
+import { useHistory, useLocation } from "react-router-dom";
 
 const options = [
     {
@@ -18,7 +21,17 @@ const options = [
 ];
 
 export default (props) => {
-
+   
+        const history = useHistory();
+        let location = useLocation();
+    
+        useEffect(() => {
+            let authData = getUserAuth();
+            if ((Object.keys(authData).length === 0)  || authData.roles[0]!=='ROLE_ADMIN'){
+                history.push("/");
+            }
+        }, [history, location.pathname]);
+    console.log(listarMarcas())
     return (
         <div className="container">
             <Options>
