@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-//import {getUserAuth} from '../services/auth.service';
 import { register } from '../services/auth.service';
 import Alert from './Alert';
 export default ({ isProvider }) => {

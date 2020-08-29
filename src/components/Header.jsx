@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getUserAuth, logout, isCostumer } from '../services/auth.service';
+import { getUserAuth, logout, isCostumer, isProvider, isAdmin } from '../services/auth.service';
 import { useHistory, useLocation } from "react-router-dom";
 import { useEffect } from 'react';
 import { FaAngleDown, FaUserCog,  FaSignOutAlt, FaShoppingBag } from 'react-icons/fa';
@@ -45,19 +45,19 @@ export default (props) => {
                         </h1></Link>
                     }
                      {
-                        Object.keys(getUserAuth()).length > 0 && getUserAuth().roles[0] === 'ROLE_USER' &&
+                        Object.keys(getUserAuth()).length > 0 && isCostumer() && !isAdmin() &&
                         < Link to="/costumer"><h1 className="title has-text-light">
                             Site
                         </h1></Link>
                     }
                      {
-                        Object.keys(getUserAuth()).length > 0 && getUserAuth().roles[0] === 'ROLE_PROVIDER' &&
+                        Object.keys(getUserAuth()).length > 0 && isProvider() &&
                         < Link to="/provider"><h1 className="title has-text-light">
                             Site
                         </h1></Link>
                     }
                     {
-                        Object.keys(getUserAuth()).length > 0 && getUserAuth().roles[0] === 'ROLE_ADMIN' &&
+                        Object.keys(getUserAuth()).length > 0 && isAdmin()  &&
                         < Link to="/admin"><h1 className="title has-text-light">
                             Site
                         </h1></Link>

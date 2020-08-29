@@ -84,12 +84,23 @@ export function isProvider() {
 
 }
 
+export function isAdmin() {
+
+    let auth = getUserAuth();
+
+    if (auth.roles) {
+        let resp = auth.roles.find(r => r === 'ROLE_ADMIN');
+        return resp !== undefined
+    }
+
+}
+
 export function isTokenValid(){
     let isValid = false;
     let auth = getUserAuth();
     if (auth.accessToken) {
         let  decodedToken = decode(auth.accessToken);
-        isValid = decodedToken.exp < Date.now() /1000;
+        isValid = decodedToken.exp > Date.now() /1000;
     } 
   return isValid;
 }

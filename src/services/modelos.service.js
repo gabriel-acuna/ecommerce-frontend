@@ -1,8 +1,8 @@
-import { marcasEndPoint } from './config/endpoints';
+import { modeloEndPoint } from './config/endpoints';
 import { authHeader } from './auth.service';
 
-export async function listarMarcas(){
-  let res = await fetch(marcasEndPoint,{
+export async function listarModelosPorMarca(id){
+  let res = await fetch(`${modeloEndPoint}-marca/${id}`,{
       method:'GET',
       headers:{
         Authorization: authHeader()
@@ -12,8 +12,8 @@ export async function listarMarcas(){
   return response;
 }
 
-export async function getMarca(id){
-  let res = await fetch(`${marcasEndPoint}/${id}`,{
+export async function listarModelos(id){
+  let res = await fetch(modeloEndPoint,{
       method:'GET',
       headers:{
         Authorization: authHeader()
@@ -22,9 +22,10 @@ export async function getMarca(id){
   let response = await res.json();
   return response;
 }
-export async function resgistrarMarcar(data){
+
+export async function resgistrarModelo(data){
   console.log(data);
-  let res = await fetch(marcasEndPoint,{
+  let res = await fetch(modeloEndPoint,{
     method:'POST',
     body: JSON.stringify(data),
     headers:{
@@ -37,9 +38,20 @@ export async function resgistrarMarcar(data){
   return respose;
 }
 
-export async function modificarMarca(id,data){
+export async function getModelo(id){
+  let res = await fetch(`${modeloEndPoint}/${id}`,{
+      method:'GET',
+      headers:{
+        Authorization: authHeader()
+      }
+  });
+  let response = await res.json();
+  return response;
+}
+
+export async function modificarModelo(id,data){
  
-  let res = await fetch(`${marcasEndPoint}/${id}`,{
+  let res = await fetch(`${modeloEndPoint}/${id}`,{
     method:'POST',
     body: JSON.stringify(data),
     headers:{

@@ -10,7 +10,7 @@ const options = [
         title: 'Productos',
         icon: <FcMultipleSmartphones />,
         content: 'Gestión de productos',
-        url: ''
+        url: '/brands'
     }, {
         title: 'Ventas',
         content: 'Consulte las realizadas',
