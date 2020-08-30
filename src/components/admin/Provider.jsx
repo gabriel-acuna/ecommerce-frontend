@@ -40,14 +40,18 @@ export default (props) => {
                                     Proveedor
                                 </th>
                                 <th>
+                                   Comisión
+                                </th>
+                                <th>
                                     Opciones
                                 </th>
                             </thead>
                             <tbody>
                                 {
-                                    proveedores.map((m, i) => (
+                                    proveedores.map((p, i) => (
                                         <tr key={i}>
-                                            <td>{m.nombre}</td>
+                                            <td>{p[1]} {p[2]}</td>
+                                            <td>{p[5]}</td>
                                             <td>
                                                 
 
