@@ -9,7 +9,8 @@ export default (props) => {
     const history = useHistory();
     const [showLoginButton, setShowLoginButton] = React.useState(true)
     let location = useLocation();
-
+    const siteName = 'LY Store';
+    
     useEffect(() => {
 
         if (Object.keys(getUserAuth()).length === 0 && location.pathname === '/login') {
@@ -41,25 +42,25 @@ export default (props) => {
                     {
                         Object.keys(getUserAuth()).length === 0 &&
                         < Link to="/"><h1 className="title has-text-light">
-                            Site
+                            { siteName}
                         </h1></Link>
                     }
                      {
                         Object.keys(getUserAuth()).length > 0 && isCostumer() && !isAdmin() &&
                         < Link to="/costumer"><h1 className="title has-text-light">
-                            Site
+                             { siteName}
                         </h1></Link>
                     }
                      {
                         Object.keys(getUserAuth()).length > 0 && isProvider() &&
                         < Link to="/provider"><h1 className="title has-text-light">
-                            Site
+                            { siteName}
                         </h1></Link>
                     }
                     {
                         Object.keys(getUserAuth()).length > 0 && isAdmin()  &&
                         < Link to="/admin"><h1 className="title has-text-light">
-                            Site
+                             { siteName}
                         </h1></Link>
                     }
                     {

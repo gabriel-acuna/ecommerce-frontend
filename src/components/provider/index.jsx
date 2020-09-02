@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import Options from '../shared/Options';
-import { FcMultipleSmartphones, FcCollaboration } from 'react-icons/fc';
+import { FcMultipleSmartphones, FcAbout, FcAreaChart, FcGrid} from 'react-icons/fc';
 import OptionCard from '../shared/OptionCard';
 import { getUserAuth, isProvider } from '../../services/auth.service';
 import { useHistory, useLocation } from "react-router-dom";
+
 
 const options = [
     {
@@ -13,19 +14,19 @@ const options = [
         url: '/brands'
     }, {
         title: 'Ventas',
-        content: 'Consulte las realizadas',
-        icon: <FcCollaboration />,
+        content: 'Consulte ventas las realizadas',
+        icon: <FcAreaChart />,
         url: ''
     }, {
         title: 'Facturación',
         content: 'Consulte sus valores a pagar',
-        icon: <FcCollaboration />,
+        icon: <FcGrid />,
         url: ''
     },
     {
         title: 'Notificaciones',
         content: 'Consulte notificaiones de posibles ventas',
-        icon: <FcCollaboration />,
+        icon: <FcAbout />,
         url: ''
     }
 

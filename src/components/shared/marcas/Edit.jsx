@@ -37,7 +37,7 @@ export default (props) => {
                                 <form onSubmit={(event) => sendData(event)}>
                                     <label htmlFor="#name" className="label">Marca</label>
                                     <div className="control">
-                                        <input type="name" id="name" className="input is-primary is-small" required onChange={(event) => setName(event.target.value)} value={name} />
+                                        <input type="text" id="name" className="input is-primary is-small" required onChange={(event) => setName(event.target.value)} value={name} />
                                     </div>
 
                                     <div className="control mt-5">

@@ -3,7 +3,7 @@ import { authHeader } from './auth.service';
 
 
 
-export async function listarProvedores(id){
+export async function listarProvedores(){
   let res = await fetch(proveedorEndPoint,{
       method:'GET',
       headers:{
@@ -14,13 +14,24 @@ export async function listarProvedores(id){
   return response;
 }
 
-export async function cambiarComision(data){
+export async function obtenerProvedor(id){
+  let res = await fetch(`${proveedorEndPoint}/${id}`,{
+      method:'GET',
+      headers:{
+        Authorization: authHeader()
+      }
+  });
+  let response = await res.json();
+  return response;
+}
+
+export async function cambiarComision(id,data){
   
-  let res = await fetch( proveedorEndPoint,{
+  let res = await fetch(`${proveedorEndPoint}/${id}`,{
     method:'POST',
-    body: JSON.stringify(data),
+    body: data,
     headers:{
-      'Content-Type': 'application/json',
+      'Content-Type': 'text/plain',
       Authorization: authHeader()
     }
   });

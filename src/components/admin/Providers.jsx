@@ -51,11 +51,11 @@ export default (props) => {
                                     proveedores.map((p, i) => (
                                         <tr key={i}>
                                             <td>{p[1]} {p[2]}</td>
-                                            <td>{p[5]}</td>
+                                            <td>{Math.round(p[5] * 100)} %</td>
                                             <td>
                                                 
 
-                                                <button className="is-small button mr-3 is-info is-outlined">Editar</button>
+                                                <Link className="is-small button mr-3 is-info is-outlined" to={`/providers/${p[0]}`}>Editar</Link>
                                                
 
                                             </td>

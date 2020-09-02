@@ -3,7 +3,7 @@ import Options from '../shared/Options';
 import { FcMultipleSmartphones, FcCollaboration } from 'react-icons/fc';
 import OptionCard from '../shared/OptionCard';
 import {getUserAuth, isAdmin} from '../../services/auth.service';
-import {  listarProvedores} from '../../services/proveedor.service';
+
 import { useHistory, useLocation } from "react-router-dom";
 
 const options = [

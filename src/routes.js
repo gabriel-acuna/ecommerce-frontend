@@ -7,9 +7,10 @@ import CostumerHome from './components/costumer/index';
 import Edit from './components/shared/marcas/Edit';
 import EditM   from './components/shared/modelos/Edit';
 import New from './components/shared/marcas/New';
-import Provider from './components/admin/Provider';
+import Providers from './components/admin/Providers';
 import Modelo from './components/shared/modelos/Modelo';
 import Modelos from './components/shared/modelos/Modelos';
+import EditProvider from './components/admin/EditProvider';
 
 
 
@@ -46,8 +47,13 @@ export const routes = [
   },
   {
     path: "/providers",
-    component: Provider
-  },{
+    component: Providers
+  }, 
+  {
+    path: "/providers/:id",
+    component: EditProvider
+  },
+  {
     path:"/model/:marca",
     component:Modelo
   },
