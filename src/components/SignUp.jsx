@@ -104,7 +104,7 @@ export default ({ isProvider }) => {
 
                             <div className="control">
                                 <label htmlFor="#email" className="label">Email</label>
-                                <input type="email" id="email" className="input is-primary" required onChange={(event) => setEmail(event.target.value)} value={email} />
+                                <input type="email" id="email" className="input is-primary" required onChange={(event) => setEmail(event.target.value.toLowerCase())} value={email} />
 
                             </div>
 

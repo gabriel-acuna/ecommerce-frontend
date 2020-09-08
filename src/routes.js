@@ -11,6 +11,7 @@ import Providers from './components/admin/Providers';
 import Modelo from './components/shared/modelos/Modelo';
 import Modelos from './components/shared/modelos/Modelos';
 import EditProvider from './components/admin/EditProvider';
+import NewProduct from './components/provider/Product';
 
 
 
@@ -65,6 +66,11 @@ export const routes = [
     path:"/mod/:id",
     component:EditM
   },
+  {
+    path:'/products/new',
+    component:NewProduct
+
+  }
 
 
 ];

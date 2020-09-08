@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { resgistrarMarcar } from '../../../services/marcas.service';
 import Alert from '../../Alert';
 import {FaArrowLeft} from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { isProvider, isAdmin, getUserAuth } from '../../../services/auth.service';
 
 export default () => {
     
     
     const [name, setName] = useState('');
     const [response, setResponse] = useState({ message: { type: '', message: '' } });
-   
+    const history = useHistory();
+
+    useEffect(() => {
+        let authData = getUserAuth();
+        if (Object.keys(authData).length === 0) {
+            history.push("/");
+        } else if (!isAdmin() && !isProvider()) {
+            history.push("/");
+        }
+    }, [history]);
+
     async function sendData(event){
         event.preventDefault();
         let resp =  await resgistrarMarcar({name});

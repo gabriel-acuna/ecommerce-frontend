@@ -2,17 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { modificarMarca, getMarca } from '../../../services/marcas.service';
 import Alert from '../../Alert';
-import {FaArrowLeft} from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { useHistory,  Link } from "react-router-dom";
+import { isProvider, isAdmin, getUserAuth } from '../../../services/auth.service';
+
+import { FaArrowLeft } from 'react-icons/fa';
+
 
 export default (props) => {
     let { id } = useParams();
-    
+    const history = useHistory();
+
     const [name, setName] = useState('');
     const [response, setResponse] = useState({ message: { type: '', message: '' } });
     useEffect(() => {
-        getMarca(id).then(r => setName(r.nombre));
-    },[]);
+        let authData = getUserAuth();
+        if (Object.keys(authData).length === 0) {
+            history.push("/");
+        } else if (isAdmin() || isProvider()) {
+            getMarca(id).then(r => setName(r.nombre));
+        }else{
+            history.push("/");
+        }
+    }, [history, id]);
 
     async function sendData(event) {
         event.preventDefault();

@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { listarModelosPorMarca } from '../../../services/modelos.service';
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from 'react-icons/fa';
+import {getUserAuth, isAdmin, isProvider} from '../../../services/auth.service';
 
 
 export default (props) => {
 
     const [modelos, setModelos] = useState([]);
+    const history = useHistory();
     let { marca } = useParams();
 
     useEffect(() => {
-        listarModelosPorMarca(marca).then(r => {
+        let authData = getUserAuth();
+        if (Object.keys(authData).length === 0) {
+            history.push("/");
+        } else if (isAdmin() || isProvider()) {
+                listarModelosPorMarca(marca).then(r => {
             if (r !== modelos) {
                 setModelos(r)
             }
+        
         });
-
+    }
     });
 
 

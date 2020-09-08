@@ -1,20 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { modificarModelo, getModelo } from '../../../services/modelos.service';
 import Alert from '../../Alert';
-import {FaArrowLeft} from 'react-icons/fa';
+import { FaArrowLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import {getUserAuth, isAdmin, isProvider} from '../../../services/auth.service';
 
 export default (props) => {
     let { id } = useParams();
-    
+
     const [name, setName] = useState('');
+    const history = useHistory();
     const [brandId, setBranId] = useState('');
     const [response, setResponse] = useState({ message: { type: '', message: '' } });
     useEffect(() => {
-        getModelo(id).then(r =>{ setName(r.nombre);
-        setBranId(r.marca.id)});
-    },[]);
+        let authData = getUserAuth();
+        if (Object.keys(authData).length === 0) {
+            history.push("/");
+        } else if (isAdmin() || isProvider()) {
+            getModelo(id).then(r => {
+                setName(r.nombre);
+                setBranId(r.marca.id)
+            });
+        }
+    }, []);
 
     async function sendData(event) {
         event.preventDefault();
