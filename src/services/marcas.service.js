@@ -23,7 +23,6 @@ export async function getMarca(id){
   return response;
 }
 export async function resgistrarMarcar(data){
-  console.log(data);
   let res = await fetch(marcasEndPoint,{
     method:'POST',
     body: JSON.stringify(data),

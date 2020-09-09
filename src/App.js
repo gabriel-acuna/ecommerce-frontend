@@ -1,14 +1,17 @@
 import React from 'react';
 import Layaout from './components/Layaout';
+import FirebaseService from './services/firebase.service';
 
-export const AuthContext = React.createContext();
+export const FirebaseContext = React.createContext();
 function App() {
-  
+  const firebaseService =  new FirebaseService()
   return (
     <div className="App">
-      
-      <Layaout/>
-  
+      <FirebaseContext.Provider value={ firebaseService}>
+        <Layaout />
+      </FirebaseContext.Provider>
+
+
     </div>
   );
 }

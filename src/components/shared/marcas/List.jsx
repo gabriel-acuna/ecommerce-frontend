@@ -42,7 +42,12 @@ export default (props) => {
                             {!isProvider() && isAdmin() && <Link to='/admin'>
                                 <FaArrowLeft />
                             </Link>}
+
+
                             <Link className="button  button is-primary is-inverted" to="/brand">Nueva marca</Link>
+                            {
+                                isProvider() && <Link to="/products-managment" className="button  button is-info is-inverted"> Productos</Link>
+                            }
                             <div className="table-container mt-5">
                                 <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                                     <thead>
@@ -78,9 +83,6 @@ export default (props) => {
                     </div>
                 </div>
 
-                {
-                    isProvider() && <Products />
-                }
             </div>
         </div>
     )

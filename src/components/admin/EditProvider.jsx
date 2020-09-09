@@ -18,7 +18,7 @@ export default (props) => {
             setCommission(r[5]);
             setProviderId(r[0]);
         });
-    }, []);
+    }, [id]);
 
     async function sendData(event) {
         event.preventDefault();

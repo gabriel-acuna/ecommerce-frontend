@@ -12,6 +12,7 @@ import Modelo from './components/shared/modelos/Modelo';
 import Modelos from './components/shared/modelos/Modelos';
 import EditProvider from './components/admin/EditProvider';
 import NewProduct from './components/provider/Product';
+import Products from './components/provider/Products';
 
 
 
@@ -70,6 +71,10 @@ export const routes = [
     path:'/products/new',
     component:NewProduct
 
+  },
+  {
+    path:'/products-managment',
+    component: Products
   }
 
 
