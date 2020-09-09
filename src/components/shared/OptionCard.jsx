@@ -11,7 +11,7 @@ export default ({ title, icon, content, url, info }) => {
                     <header className="card-header">
                         <p className="card-header-title">
                             {title}
-                            <p className="has-small-text has-text-info ml-3 has-text-weight-light">  {info} </p>
+                            <span className="has-small-text has-text-info ml-3 has-text-weight-light">  {info} </span>
                         </p>
                         <div className="card-header-icon" aria-label="more options">
                             <span className="icon">

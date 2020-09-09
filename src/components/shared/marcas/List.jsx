@@ -36,19 +36,24 @@ export default (props) => {
 
                     <div className="card">
                         <div className="card-content">
-                            <Link to='/'>
+                            {isProvider() && !isAdmin() && <Link to='/provider'>
                                 <FaArrowLeft />
-                            </Link>
+                            </Link>}
+                            {!isProvider() && isAdmin() && <Link to='/admin'>
+                                <FaArrowLeft />
+                            </Link>}
                             <Link className="button  button is-primary is-inverted" to="/brand">Nueva marca</Link>
                             <div className="table-container mt-5">
                                 <table className="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
                                     <thead>
-                                        <th>
-                                            Marca
-                                </th>
-                                        <th>
-                                            Opciones
-                                </th>
+                                        <tr>
+                                            <th>
+                                                Marca
+                                        </th>
+                                            <th>
+                                                Opciones
+                                        </th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                         {
@@ -74,7 +79,7 @@ export default (props) => {
                 </div>
 
                 {
-                    isProvider() && <Products/> 
+                    isProvider() && <Products />
                 }
             </div>
         </div>
