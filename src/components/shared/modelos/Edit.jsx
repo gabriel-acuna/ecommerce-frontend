@@ -23,7 +23,7 @@ export default (props) => {
                 setBranId(r.marca.id)
             });
         }
-    }, []);
+    }, [history,id]);
 
     async function sendData(event) {
         event.preventDefault();

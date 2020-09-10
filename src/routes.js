@@ -1,4 +1,3 @@
-import React from 'react';
 import Home from './components/Home';
 import Login from './components/Login';
 import AdminHome from './components/admin/index';
@@ -12,9 +11,8 @@ import Modelo from './components/shared/modelos/Modelo';
 import Modelos from './components/shared/modelos/Modelos';
 import EditProvider from './components/admin/EditProvider';
 import NewProduct from './components/provider/Product';
-import Products from './components/provider/Products';
-
-
+import ProductsByProvider from './components/provider/Products';
+import EditProduct from './components/provider/EditProduct';
 
 
 export const routes = [
@@ -74,7 +72,10 @@ export const routes = [
   },
   {
     path:'/products-managment',
-    component: Products
+    component: ProductsByProvider
+  },{
+    path: '/products-managment/:id',
+    component: EditProduct
   }
 
 

@@ -3,14 +3,18 @@ import { Link } from 'react-router-dom';
 import { getUserAuth, logout, isCostumer, isProvider, isAdmin } from '../services/auth.service';
 import { useHistory, useLocation } from "react-router-dom";
 import { useEffect } from 'react';
-import { FaAngleDown, FaUserCog,  FaSignOutAlt, FaShoppingBag } from 'react-icons/fa';
+import { FaAngleDown, FaUserCog,  FaSignOutAlt, FaShoppingBag, FaShoppingCart } from 'react-icons/fa';
+import {shoppingKartItems} from '../services/ventas.service';
+
+
 export default (props) => {
 
     const history = useHistory();
     const [showLoginButton, setShowLoginButton] = React.useState(true)
+    const [items, setItems] = React.useState(0);
     let location = useLocation();
     const siteName = 'LY Store';
-    
+
     useEffect(() => {
 
         if (Object.keys(getUserAuth()).length === 0 && location.pathname === '/login') {
@@ -18,6 +22,7 @@ export default (props) => {
         } else if (Object.keys(getUserAuth()).length === 0 && location.pathname !== '/login') {
             setShowLoginButton(true)
         }
+        setItems(shoppingKartItems())
     }, [location.pathname]);
 
 
@@ -52,7 +57,7 @@ export default (props) => {
                         </h1></Link>
                     }
                      {
-                        Object.keys(getUserAuth()).length > 0 && isProvider() &&
+                        Object.keys(getUserAuth()).length > 0 && isProvider()  && !isAdmin() &&
                         < Link to="/provider"><h1 className="title has-text-light">
                             { siteName}
                         </h1></Link>
@@ -90,16 +95,16 @@ export default (props) => {
                             </div>
                             <div className="dropdown-menu" id="dropdown-menu4" role="menu">
                                 <div className="dropdown-content">
-                                    <a className="dropdown-item">
+                                    <Link className="dropdown-item" to="/">
                                         <span> Perfil</span>
                                         <span className="icon is-small is-pulled-right">
                                             <FaUserCog />
                                         </span>
 
 
-                                    </a>
+                                    </Link>
                                     {
-                                        isCostumer() && 
+                                        isCostumer() && isAdmin() &&
                                         <Link className="dropdown-item" to="/costumer">
                                         <span> Comprar</span>
                                         <span className="icon is-small is-pulled-right">
@@ -109,12 +114,12 @@ export default (props) => {
 
                                     </Link>
                                     }
-                                    <a className="dropdown-item" onClick={event => singOut(event)}>
+                                    <Link className="dropdown-item" onClick={event => singOut(event)} to="/">
                                         <span>Cerrar sesión</span>
                                         <span className="icon is-small is-pulled-right">
                                             <FaSignOutAlt />
                                         </span>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -126,7 +131,11 @@ export default (props) => {
 
 
 
-
+                    {
+                        isCostumer() && <button className="button is-small is-link is-pulled-right mx-3">{items}
+                            <FaShoppingCart/>
+                        </button>
+                    }
 
                 </div>
 

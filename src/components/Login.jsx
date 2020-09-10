@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { login } from '../services/auth.service';
+import { login, isCostumer } from '../services/auth.service';
+import {createShoppingKart} from '../services/ventas.service';
 import { useHistory } from "react-router-dom";
 import  Alert  from './Alert';
 export default (props) => {
@@ -26,6 +27,7 @@ export default (props) => {
         event.preventDefault();
         login({ username: email, password }).then(resp => {
             if ((Object.keys(resp).length > 0 && resp.accessToken)) {
+                if(isCostumer()) createShoppingKart();
                 checkPermission(resp.roles);
             } else {
                 setHasError(true);

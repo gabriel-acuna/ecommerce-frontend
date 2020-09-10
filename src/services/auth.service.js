@@ -44,6 +44,8 @@ export async function register(userData) {
 
 export function logout() {
     localStorage.removeItem("auth");
+    if(localStorage.getItem("kart"))
+        localStorage.removeItem("kart");  
 }
 
 export function authHeader() {

@@ -3,6 +3,7 @@ import Options from '../shared/Options';
 import { FcMultipleSmartphones, FcAbout, FcAreaChart, FcGrid } from 'react-icons/fc';
 import OptionCard from '../shared/OptionCard';
 import { getUserAuth, isProvider } from '../../services/auth.service';
+import { getTotal } from '../../services/ventas.service';
 import { nuevasNotificaciones } from '../../services/notificacion.service';
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -14,12 +15,15 @@ export default (props) => {
     let location = useLocation();
 
     const [notificaciones, setNotificaciones] = useState('');
+    const [ventas, setVentas] = useState(0);
     useEffect(() => {
         let authData = getUserAuth();
         if ((Object.keys(authData).length === 0) || isProvider() === false) {
             history.push("/");
         }
         nuevasNotificaciones().then(resp => setNotificaciones(resp.message));
+        getTotal().then(resp =>{ if (resp!==null){setVentas(resp.total)}});
+        
     }, [history, location.pathname]);
 
     const options = [
@@ -34,7 +38,7 @@ export default (props) => {
             content: 'Consulte ventas las realizadas',
             icon: <FcAreaChart />,
             url: '',
-            info: ''
+            info: `Total: ${ventas}`
         }, {
             title: 'Facturación',
             content: 'Consulte sus valores a pagar',

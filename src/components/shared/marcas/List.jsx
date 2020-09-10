@@ -3,7 +3,6 @@ import { listarMarcas } from '../../../services/marcas.service';
 import { isProvider, isAdmin, getUserAuth } from '../../../services/auth.service';
 import { useHistory, useLocation, Link } from "react-router-dom";
 import { FaArrowLeft } from 'react-icons/fa';
-import Products from '../../provider/Products';
 
 
 export default (props) => {

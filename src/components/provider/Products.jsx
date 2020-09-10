@@ -20,28 +20,14 @@ export default (props) => {
         }
         getProductsByProvider().then(
             r => {
-                let data = [];
+                
                 if (Object.keys(r).length > 0) {
-                    for (let pro of r) {
-                        let row = {};
-
-
-
-                        row['modelo'] = pro[0];
-                        row['precio'] = pro[1];
-                        row['proveedor'] = pro[2];
-                        row['descripcion'] = pro[3];
-                        row['urlImagen'] = pro[4];
-
-                        data.push(row);
-                    }
-                    console.log(data);
-                    setProducts(data);
+                   setProducts(r)
                 }
             }
         );
 
-    }, []);
+    }, [history]);
     return (
         <div className="container">
 
@@ -74,12 +60,12 @@ export default (props) => {
                                     </thead>
                                     <tbody>
                                         {
-                                            products.map(p => (
-                                                <tr>
+                                            products.map((p,i) => (
+                                                <tr key={i}>
                                                     <td>{p.modelo.marca.nombre}</td>
                                                     <td>{p.modelo.nombre}</td>
                                                     <td>{p.precio}</td>
-                                                    <td></td>
+                                                    <td> <Link to={`/products-managment/${p.id}`} className="is-small button mr-3 is-info is-outlined">Editar</Link></td>
                                                 </tr>
                                             )
                                             )

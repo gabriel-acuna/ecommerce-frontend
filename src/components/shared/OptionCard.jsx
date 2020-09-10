@@ -1,8 +1,8 @@
 import React from 'react';
-import { useHistory, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 
 export default ({ title, icon, content, url, info }) => {
-    const history = useHistory();
+
 
     return (
         <div className="column is-half">
